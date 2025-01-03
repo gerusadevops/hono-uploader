@@ -1,0 +1,31 @@
+{
+  "name": "hono-upload",
+  "version": "1.0.0",
+  "description": "Hono upload let you upload files to hono endpoints using middleware",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup -d --watch",
+    "start-test-server": "bun run --watch ./src/tests/server.bun.ts",
+    "test": "bun test"
+  },
+  "author": "Gerardo Torres",
+  "license": "ISC",
+  "devDependencies": {
+    "@hono/node-server": "^1.13.7",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.10.5",
+    "@types/supertest": "^6.0.2",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.722.0",
+    "@aws-sdk/lib-storage": "^3.722.0",
+    "hono": "^4.6.15"
+  }
+}
