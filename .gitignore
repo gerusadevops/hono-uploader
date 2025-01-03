@@ -1,5 +1,5 @@
 /node_modules
-src/tests/testUploads
+src/tests/testUploads/*
 !.gitkeep
 .env
 .DS_Store
