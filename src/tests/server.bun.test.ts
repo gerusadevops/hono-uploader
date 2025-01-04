@@ -1,5 +1,4 @@
 import { HonoUploadError } from "../model/HonoUpload/interface/IHonoUploadError";
-import { HonoUploadS3Deleter } from "../model/HonoUpload/storage/s3/HonoUploaderS3Deleter";
 import { TEST_SERVER_PORT } from "./globaltest";
 import fs from "fs";
 
