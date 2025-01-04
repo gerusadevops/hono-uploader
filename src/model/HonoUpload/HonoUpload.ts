@@ -3,7 +3,7 @@ import type { HonoFileStorageOption } from "./interface/HonoStorageOption";
 import { HonoStorageDisk } from "./storage/HonoStorageDisk";
 import { type UploadOptions, UploadOptionsDefault } from "./HonoUploadOptions";
 import { HTTPException } from "hono/http-exception";
-import { HonoUploadError } from "./interface/IHonoUploadError";
+import { HonoUploadError } from "./HonoUploadError";
 
 
 export interface UploadedFile {

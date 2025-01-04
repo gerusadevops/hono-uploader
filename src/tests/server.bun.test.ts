@@ -1,4 +1,4 @@
-import { HonoUploadError } from "../model/HonoUpload/interface/IHonoUploadError";
+import { HonoUploadError } from "../model/HonoUpload/HonoUploadError";
 import { TEST_SERVER_PORT } from "./globaltest";
 import fs from "fs";
 
