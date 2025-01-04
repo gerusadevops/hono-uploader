@@ -1,21 +1,22 @@
-import type { HonoFileStorageOption } from "../interface/HonoStorageOption";
-import { S3Client, ObjectCannedACL } from "@aws-sdk/client-s3";
+import type { HonoFileStorageOption } from "../../interface/HonoStorageOption";
+import { S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
+import { IHonoUploadS3Configuration, S3BucketOptions } from "./IHonoStorageS3Constructor";
 import path from 'path';
 
-export interface S3BucketOptions {
-    bucketName: string;
-    acl?: ObjectCannedACL;
+
+interface HonoUploadS3Path {
+    path: string;
 }
 
 export class HonoStorageS3 implements HonoFileStorageOption {
     s3Client: S3Client;
     bucketOptions: S3BucketOptions;
     basePath: string;
-    constructor(s3Client: S3Client, bucketOptions: S3BucketOptions, basePath: string = '') {
-        this.s3Client = s3Client;
-        this.bucketOptions = bucketOptions;
-        this.basePath = basePath;
+    constructor(s3Config: IHonoUploadS3Configuration, path: HonoUploadS3Path) {
+        this.basePath = path.path;
+        this.s3Client = s3Config.s3Client;
+        this.bucketOptions = s3Config.bucketConfig;
     }
     async saveFile(file: File, filename: string): Promise<string> {
         const filenameSanitizado = filename.replace(/[^a-zA-Z0-9.]/g, '');

@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup -d --watch",
-    "start-test-server": "bun run --watch ./src/tests/server.bun.ts",
+    "test-server": "bun run --watch ./src/tests/server.bun.ts",
     "test": "bun test"
   },
   "author": "Gerardo Torres",
@@ -17,9 +17,7 @@
     "@hono/node-server": "^1.13.7",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.5",
-    "@types/supertest": "^6.0.2",
     "jest": "^29.7.0",
-    "supertest": "^7.0.0",
     "tsup": "^8.3.5",
     "typescript": "^5.7.2"
   },
