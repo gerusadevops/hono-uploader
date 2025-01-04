@@ -1,10 +1,10 @@
-# Hono Upload
+# Hono Uploader
 
-Hono Upload is a powerful and flexible file upload library for Node.js and Bun, designed to handle various file types and storage options, including local disk storage and Amazon S3. It provides a simple API for uploading files, validating file types, and managing file storage.
+Hono Uploader is a powerful and flexible file upload library for Node.js and Bun, designed to handle various file types and storage options, including local disk storage and Amazon S3. It provides a simple API for uploading files, validating file types, and managing file storage.
 
 ## Motivation
 
-The motivation behind Hono Upload is to provide a robust and easy-to-use solution for file uploads in Bun and Node.js applications using Hono. Whether you need to store files locally or in the cloud, Hono Upload offers a consistent and reliable interface for handling file uploads.
+The motivation behind Hono Uploader is to provide a robust and easy-to-use solution for file uploads in Bun and Node.js applications using Hono. Whether you need to store files locally or in the cloud, Hono Uploader offers a consistent and reliable interface for handling file uploads.
 
 ## Features
 
@@ -15,10 +15,10 @@ The motivation behind Hono Upload is to provide a robust and easy-to-use solutio
 
 ## Installation
 
-To install Hono Upload, use npm or yarn:
+To install Hono Uploader, use npm or yarn:
 
 ```bash
-npm install hono-upload
+npm install hono-uploader
 ```
 
 ## Usage
@@ -30,14 +30,14 @@ To upload files to local disk storage using Hono framework, use the following ex
 ```typescript
 import { Hono } from 'hono';
 import { logger } from 'hono/logger';
-import { HonoUpload, UploadedFile } from 'hono-upload';
-import { HonoStorageDisk } from 'hono-upload/storage/HonoStorageDisk';
+import { HonoUploader, UploadedFile } from 'hono-uploader';
+import { HonoStorageDisk } from 'hono-uploader/storage/HonoStorageDisk';
 
 const app = new Hono();
 app.use(logger());
 
 const diskStorage = new HonoStorageDisk('./uploads');
-const honoUploader = new HonoUpload(diskStorage);
+const honoUploader = new HonoUploader(diskStorage);
 
 app.post('/upload', honoUploader.single('file'), (c) => c.json({ location: c.get('file').location }));
 
@@ -55,9 +55,9 @@ To upload files to Amazon S3 using Hono framework, use the following example:
 ```typescript
 import { Hono } from 'hono';
 import { logger } from 'hono/logger';
-import { HonoUpload, UploadedFile } from 'hono-upload';
-import { HonoStorageS3 } from 'hono-upload/storage/s3/HonoStorageS3';
-import { amazonS3Configurator } from 'hono-upload/storage/s3/IHonoStorageS3Constructor';
+import { HonoUploader, UploadedFile } from 'hono-uploader';
+import { HonoStorageS3 } from 'hono-uploader/storage/s3/HonoStorageS3';
+import { amazonS3Configurator } from 'hono-uploader/storage/s3/IHonoStorageS3Constructor';
 
 const app = new Hono();
 app.use(logger());
@@ -69,7 +69,7 @@ const region = process.env.AWS_S3_DATA_REGION!;
 
 const s3Config = amazonS3Configurator(keyId, keySecret, bucketName, region);
 const s3Storage = new HonoStorageS3(s3Config, { path: 'test' });
-const s3Uploader = new HonoUpload(s3Storage);
+const s3Uploader = new HonoUploader(s3Storage);
 
 app.post('/uploadS3', s3Uploader.single('file'), (c) => c.json({ location: c.get('file').location }));
 
@@ -82,12 +82,12 @@ app.listen(3000, () => {
 
 ## Error Handling
 
-Hono Upload provides detailed error messages for invalid uploads. Here are some common errors:
+Hono Uploader provides detailed error messages for invalid uploads. Here are some common errors:
 
-- `HonoUploadError.EMPTY_FILENAME`: The uploaded file has an empty filename.
-- `HonoUploadError.FILE_TOO_BIG`: The uploaded file exceeds the size limit.
-- `HonoUploadError.INVALID_FILE_TYPE`: The uploaded file type is not allowed.
-- `HonoUploadError.EMPTY_FILE`: The uploaded file is empty.
+- `HonoUploaderError.EMPTY_FILENAME`: The uploaded file has an empty filename.
+- `HonoUploaderError.FILE_TOO_BIG`: The uploaded file exceeds the size limit.
+- `HonoUploaderError.INVALID_FILE_TYPE`: The uploaded file type is not allowed.
+- `HonoUploaderError.EMPTY_FILE`: The uploaded file is empty.
 
 ## Testing
 
@@ -103,4 +103,4 @@ Contributions are welcome! Please open an issue or submit a pull request on GitH
 
 ## License
 
-Hono Upload is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+Hono Uploader is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.

@@ -32,9 +32,9 @@ var index_exports = {};
 __export(index_exports, {
   HonoStorageDisk: () => HonoStorageDisk,
   HonoStorageS3: () => HonoStorageS3,
-  HonoUpload: () => HonoUpload,
-  HonoUploadError: () => HonoUploadError,
-  HonoUploadS3Deleter: () => HonoUploadS3Deleter,
+  HonoUploader: () => HonoUploader,
+  HonoUploaderError: () => HonoUploaderError,
+  HonoUploaderS3Deleter: () => HonoUploaderS3Deleter,
   UploadOptionsDefault: () => UploadOptionsDefault,
   UploadOptionsImages: () => UploadOptionsImages,
   amazonS3Configurator: () => amazonS3Configurator,
@@ -42,23 +42,23 @@ __export(index_exports, {
 });
 module.exports = __toCommonJS(index_exports);
 
-// src/model/HonoUpload/HonoUploadError.ts
-var HonoUploadError = /* @__PURE__ */ ((HonoUploadError2) => {
-  HonoUploadError2["FILE_NOT_FOUND"] = "file.upload.error.file_not_found";
-  HonoUploadError2["FILES_NOT_FOUND"] = "file.upload.error.files_not_found";
-  HonoUploadError2["EXPECTED_ARRAY_OF_FILES"] = "file.upload.error.expected_array_of_files";
-  HonoUploadError2["INVALID_FILE"] = "file.upload.error.invalid_file";
-  HonoUploadError2["INVALID_FILE_TYPE"] = "file.upload.error.invalid_file_type";
-  HonoUploadError2["FILE_TOO_BIG"] = "file.upload.error.file_too_big";
-  HonoUploadError2["EMPTY_FILE"] = "file.upload.error.empty_file";
-  HonoUploadError2["EMPTY_FILENAME"] = "file.upload.error.empty_filename";
-  return HonoUploadError2;
-})(HonoUploadError || {});
+// src/model/HonoUploader/HonoUploaderError.ts
+var HonoUploaderError = /* @__PURE__ */ ((HonoUploaderError2) => {
+  HonoUploaderError2["FILE_NOT_FOUND"] = "file.upload.error.file_not_found";
+  HonoUploaderError2["FILES_NOT_FOUND"] = "file.upload.error.files_not_found";
+  HonoUploaderError2["EXPECTED_ARRAY_OF_FILES"] = "file.upload.error.expected_array_of_files";
+  HonoUploaderError2["INVALID_FILE"] = "file.upload.error.invalid_file";
+  HonoUploaderError2["INVALID_FILE_TYPE"] = "file.upload.error.invalid_file_type";
+  HonoUploaderError2["FILE_TOO_BIG"] = "file.upload.error.file_too_big";
+  HonoUploaderError2["EMPTY_FILE"] = "file.upload.error.empty_file";
+  HonoUploaderError2["EMPTY_FILENAME"] = "file.upload.error.empty_filename";
+  return HonoUploaderError2;
+})(HonoUploaderError || {});
 
-// src/model/HonoUpload/HonoUpload.ts
+// src/model/HonoUploader/HonoUploader.ts
 var import_factory = require("hono/factory");
 
-// src/model/HonoUpload/storage/HonoStorageDisk.ts
+// src/model/HonoUploader/storage/HonoStorageDisk.ts
 var import_node_path = __toESM(require("path"));
 var import_promises = __toESM(require("fs/promises"));
 var HonoStorageDisk = class {
@@ -75,7 +75,7 @@ var HonoStorageDisk = class {
   }
 };
 
-// src/model/HonoUpload/HonoUploadOptions.ts
+// src/model/HonoUploader/HonoUploaderOptions.ts
 var UploadOptionsDefault = {
   getFileKey: (file) => {
     const sanitized = encodeURIComponent(file.name);
@@ -101,9 +101,9 @@ var UploadOptionsImages = {
   required: false
 };
 
-// src/model/HonoUpload/HonoUpload.ts
+// src/model/HonoUploader/HonoUploader.ts
 var import_http_exception = require("hono/http-exception");
-var HonoUpload = class {
+var HonoUploader = class {
   storage;
   constructor(storage) {
     this.storage = storage || new HonoStorageDisk();
@@ -167,7 +167,7 @@ var HonoUpload = class {
   }
 };
 
-// src/model/HonoUpload/storage/s3/HonoStorageS3.ts
+// src/model/HonoUploader/storage/s3/HonoStorageS3.ts
 var import_lib_storage = require("@aws-sdk/lib-storage");
 var import_path = __toESM(require("path"));
 var HonoStorageS3 = class {
@@ -198,9 +198,9 @@ var HonoStorageS3 = class {
   }
 };
 
-// src/model/HonoUpload/storage/s3/HonoUploaderS3Deleter.ts
+// src/model/HonoUploader/storage/s3/HonoUploaderS3Deleter.ts
 var import_client_s3 = require("@aws-sdk/client-s3");
-var HonoUploadS3Deleter = class {
+var HonoUploaderS3Deleter = class {
   s3Configuration;
   constructor(s3Configuration) {
     this.s3Configuration = s3Configuration;
@@ -239,7 +239,7 @@ var HonoUploadS3Deleter = class {
   }
 };
 
-// src/model/HonoUpload/storage/s3/IHonoStorageS3Constructor.ts
+// src/model/HonoUploader/storage/s3/IHonoStorageS3Constructor.ts
 var import_client_s32 = require("@aws-sdk/client-s3");
 function amazonS3Configurator(accessKeyId, accessKeySecret, bucketName, region, acl = "public-read") {
   console.table({ accessKeyId, accessKeySecret, bucketName, region });
@@ -271,9 +271,9 @@ function digitalOceanSpacesS3Configurator(accessKeyId, accessKeySecret, bucketNa
 0 && (module.exports = {
   HonoStorageDisk,
   HonoStorageS3,
-  HonoUpload,
-  HonoUploadError,
-  HonoUploadS3Deleter,
+  HonoUploader,
+  HonoUploaderError,
+  HonoUploaderS3Deleter,
   UploadOptionsDefault,
   UploadOptionsImages,
   amazonS3Configurator,

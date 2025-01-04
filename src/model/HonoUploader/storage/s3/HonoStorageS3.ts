@@ -1,11 +1,11 @@
 import type { HonoFileStorageOption } from "../../interface/HonoStorageOption";
 import { S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
-import { IHonoUploadS3Configuration, S3BucketOptions } from "./IHonoStorageS3Constructor";
+import { IHonoUploaderS3Configuration, S3BucketOptions } from "./IHonoStorageS3Constructor";
 import path from 'path';
 
 
-interface HonoUploadS3Path {
+interface HonoUploaderS3Path {
     path: string;
 }
 
@@ -13,7 +13,7 @@ export class HonoStorageS3 implements HonoFileStorageOption {
     s3Client: S3Client;
     bucketOptions: S3BucketOptions;
     basePath: string;
-    constructor(s3Config: IHonoUploadS3Configuration, path: HonoUploadS3Path) {
+    constructor(s3Config: IHonoUploaderS3Configuration, path: HonoUploaderS3Path) {
         this.basePath = path.path;
         this.s3Client = s3Config.s3Client;
         this.bucketOptions = s3Config.bucketConfig;

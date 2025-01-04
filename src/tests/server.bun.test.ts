@@ -1,4 +1,4 @@
-import { HonoUploadError } from "../model/HonoUpload/HonoUploadError";
+import { HonoUploaderError } from "../model/HonoUploader/HonoUploaderError";
 import { TEST_SERVER_PORT } from "./globaltest";
 import fs from "fs";
 
@@ -69,7 +69,7 @@ describe('File upload disk storage', () => {
         });
 
         expect(response.status).toBe(400);
-        expect(await response.text()).toBe(HonoUploadError.EMPTY_FILENAME);
+        expect(await response.text()).toBe(HonoUploaderError.EMPTY_FILENAME);
     });
 
     it('Upload big file, exciding file limit', async () => {
@@ -82,7 +82,7 @@ describe('File upload disk storage', () => {
         });
 
         expect(response.status).toBe(400);
-        expect(await response.text()).toBe(HonoUploadError.FILE_TOO_BIG);
+        expect(await response.text()).toBe(HonoUploaderError.FILE_TOO_BIG);
     });
 
     it('Upload file with malicious filename', async () => {
@@ -120,7 +120,7 @@ describe('File upload disk storage', () => {
         });
 
         expect(response.status).toBe(400);
-        expect(await response.text()).toBe(HonoUploadError.INVALID_FILE_TYPE);
+        expect(await response.text()).toBe(HonoUploaderError.INVALID_FILE_TYPE);
     });
 
     it('upload many files', async () => {
@@ -149,7 +149,7 @@ describe('File upload disk storage', () => {
         });
 
         expect(response.status).toBe(400);
-        expect(await response.text()).toBe(HonoUploadError.EMPTY_FILE);
+        expect(await response.text()).toBe(HonoUploaderError.EMPTY_FILE);
     });
 
     it('upload many files with one big file', async () => {
@@ -163,7 +163,7 @@ describe('File upload disk storage', () => {
         });
 
         expect(response.status).toBe(400);
-        expect(await response.text()).toBe(HonoUploadError.FILE_TOO_BIG);
+        expect(await response.text()).toBe(HonoUploaderError.FILE_TOO_BIG);
     });
 });
 
@@ -191,7 +191,7 @@ describe('File upload s3 storage', () => {
             body: formData,
         });
         expect(response.status).toBe(400);
-        expect(await response.text()).toBe(HonoUploadError.INVALID_FILE_TYPE);
+        expect(await response.text()).toBe(HonoUploaderError.INVALID_FILE_TYPE);
     });
 
     it('upload to s3 with big file', async () => {
@@ -203,7 +203,7 @@ describe('File upload s3 storage', () => {
             body: formData,
         });
         expect(response.status).toBe(400);
-        expect(await response.text()).toBe(HonoUploadError.FILE_TOO_BIG);
+        expect(await response.text()).toBe(HonoUploaderError.FILE_TOO_BIG);
     });
 
     it('upload to s3 with empty file', async () => {
@@ -215,7 +215,7 @@ describe('File upload s3 storage', () => {
             body: formData,
         });
         expect(response.status).toBe(400);
-        expect(await response.text()).toBe(HonoUploadError.EMPTY_FILE);
+        expect(await response.text()).toBe(HonoUploaderError.EMPTY_FILE);
     });
 
     it('upload many files to s3', async () => {
@@ -243,7 +243,7 @@ describe('File upload s3 storage', () => {
             body: formData,
         });
         expect(response.status).toBe(400);
-        expect(await response.text()).toBe(HonoUploadError.EMPTY_FILE);
+        expect(await response.text()).toBe(HonoUploaderError.EMPTY_FILE);
     });
 
     it('upload many files to s3 with one big file', async () => {
@@ -256,7 +256,7 @@ describe('File upload s3 storage', () => {
             body: formData,
         });
         expect(response.status).toBe(400);
-        expect(await response.text()).toBe(HonoUploadError.FILE_TOO_BIG);
+        expect(await response.text()).toBe(HonoUploaderError.FILE_TOO_BIG);
     });
 
 

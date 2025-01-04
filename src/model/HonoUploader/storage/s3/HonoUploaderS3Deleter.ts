@@ -1,9 +1,9 @@
 import { DeleteObjectCommand, HeadObjectCommand } from "@aws-sdk/client-s3";
-import { IHonoUploadS3Configuration } from "./IHonoStorageS3Constructor";
+import { IHonoUploaderS3Configuration } from "./IHonoStorageS3Constructor";
 
-export class HonoUploadS3Deleter {
-    s3Configuration: IHonoUploadS3Configuration
-    constructor(s3Configuration: IHonoUploadS3Configuration) {
+export class HonoUploaderS3Deleter {
+    s3Configuration: IHonoUploaderS3Configuration
+    constructor(s3Configuration: IHonoUploaderS3Configuration) {
         this.s3Configuration = s3Configuration;
     }
     async deleteFileFromAmazonUrl(url: string): Promise<string | null> {

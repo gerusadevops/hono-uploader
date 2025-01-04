@@ -1,9 +1,9 @@
 import { createMiddleware } from "hono/factory";
 import type { HonoFileStorageOption } from "./interface/HonoStorageOption";
 import { HonoStorageDisk } from "./storage/HonoStorageDisk";
-import { type UploadOptions, UploadOptionsDefault } from "./HonoUploadOptions";
+import { type UploadOptions, UploadOptionsDefault } from "./HonoUploaderOptions";
 import { HTTPException } from "hono/http-exception";
-import { HonoUploadError } from "./HonoUploadError";
+import { HonoUploaderError } from "./HonoUploaderError";
 
 
 export interface UploadedFile {
@@ -13,7 +13,7 @@ export interface UploadedFile {
 
 
 
-export class HonoUpload {
+export class HonoUploader {
     private storage: HonoFileStorageOption;
 
     constructor(storage?: HonoFileStorageOption) {
@@ -21,11 +21,11 @@ export class HonoUpload {
     }
 
     private validateFileIntegrity(file: File | null, uploadOptions: UploadOptions) {
-        if (file == null) throw new HTTPException(400, { message: HonoUploadError.FILE_NOT_FOUND });
-        if (file.size == 0) throw new HTTPException(400, { message: HonoUploadError.EMPTY_FILE });
-        if (file.name == undefined || file.name == '') throw new HTTPException(400, { message: HonoUploadError.EMPTY_FILENAME });
-        if (uploadOptions.fileMimeFilter(file) == false) throw new HTTPException(400, { message: HonoUploadError.INVALID_FILE_TYPE });
-        if (uploadOptions.maxFileSizeBytes && file.size > uploadOptions.maxFileSizeBytes) throw new HTTPException(400, { message: HonoUploadError.FILE_TOO_BIG });
+        if (file == null) throw new HTTPException(400, { message: HonoUploaderError.FILE_NOT_FOUND });
+        if (file.size == 0) throw new HTTPException(400, { message: HonoUploaderError.EMPTY_FILE });
+        if (file.name == undefined || file.name == '') throw new HTTPException(400, { message: HonoUploaderError.EMPTY_FILENAME });
+        if (uploadOptions.fileMimeFilter(file) == false) throw new HTTPException(400, { message: HonoUploaderError.INVALID_FILE_TYPE });
+        if (uploadOptions.maxFileSizeBytes && file.size > uploadOptions.maxFileSizeBytes) throw new HTTPException(400, { message: HonoUploaderError.FILE_TOO_BIG });
     }
 
     optionalSingle(fieldName: string, uploadOptions: UploadOptions = UploadOptionsDefault) {
@@ -50,8 +50,8 @@ export class HonoUpload {
             const body = await c.req.parseBody();
             const file = body[fieldName];
 
-            if (file == null) throw new HTTPException(400, { message: HonoUploadError.FILE_NOT_FOUND });
-            if (file instanceof File == false) throw new HTTPException(400, { message: HonoUploadError.INVALID_FILE });
+            if (file == null) throw new HTTPException(400, { message: HonoUploaderError.FILE_NOT_FOUND });
+            if (file instanceof File == false) throw new HTTPException(400, { message: HonoUploaderError.INVALID_FILE });
 
             this.validateFileIntegrity(file, uploadOptions);
 
@@ -69,11 +69,11 @@ export class HonoUpload {
             let filesArray: File[] | File | any = body.getAll(fieldName);
 
 
-            if (filesArray === null) throw new HTTPException(400, { message: HonoUploadError.FILES_NOT_FOUND });
+            if (filesArray === null) throw new HTTPException(400, { message: HonoUploaderError.FILES_NOT_FOUND });
             if (filesArray instanceof File === true) filesArray = [filesArray];
-            if (filesArray instanceof Array === false) throw new HTTPException(400, { message: HonoUploadError.EXPECTED_ARRAY_OF_FILES });
+            if (filesArray instanceof Array === false) throw new HTTPException(400, { message: HonoUploaderError.EXPECTED_ARRAY_OF_FILES });
             for (const file of filesArray) {
-                if (file instanceof File === false) throw new HTTPException(400, { message: HonoUploadError.INVALID_FILE });
+                if (file instanceof File === false) throw new HTTPException(400, { message: HonoUploaderError.INVALID_FILE });
             }
             const actualFiles = filesArray as File[];
             const filesLocation = await Promise.all(actualFiles.map(async (file) => {

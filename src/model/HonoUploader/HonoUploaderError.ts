@@ -1,4 +1,4 @@
-export enum HonoUploadError {
+export enum HonoUploaderError {
     FILE_NOT_FOUND = 'file.upload.error.file_not_found',
     FILES_NOT_FOUND = 'file.upload.error.files_not_found',
     EXPECTED_ARRAY_OF_FILES = 'file.upload.error.expected_array_of_files',

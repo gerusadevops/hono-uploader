@@ -6,13 +6,13 @@ export interface S3BucketOptions {
     acl?: ObjectCannedACL;
 }
 
-export interface IHonoUploadS3Configuration {
+export interface IHonoUploaderS3Configuration {
     s3Client: S3Client;
     bucketConfig: S3BucketOptions;
 }
 
 
-export function amazonS3Configurator(accessKeyId: string, accessKeySecret: string, bucketName: string, region: string, acl: ObjectCannedACL = "public-read"): IHonoUploadS3Configuration {
+export function amazonS3Configurator(accessKeyId: string, accessKeySecret: string, bucketName: string, region: string, acl: ObjectCannedACL = "public-read"): IHonoUploaderS3Configuration {
    
     console.table({ accessKeyId, accessKeySecret, bucketName, region });
 
@@ -28,7 +28,7 @@ export function amazonS3Configurator(accessKeyId: string, accessKeySecret: strin
     return { s3Client, bucketConfig: s3BucketOptions };
 }
 
-export function digitalOceanSpacesS3Configurator(accessKeyId: string, accessKeySecret: string, bucketName: string, acl: ObjectCannedACL = "public-read"): IHonoUploadS3Configuration {
+export function digitalOceanSpacesS3Configurator(accessKeyId: string, accessKeySecret: string, bucketName: string, acl: ObjectCannedACL = "public-read"): IHonoUploaderS3Configuration {
     const s3Client = new S3Client({
         endpoint: "https://nyc3.digitaloceanspaces.com",
         forcePathStyle: false,

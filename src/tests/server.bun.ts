@@ -1,13 +1,13 @@
 import { TEST_SERVER_PORT } from './globaltest';
-import { HonoUpload, UploadedFile } from '../model/HonoUpload/HonoUpload';
+import { HonoUploader, UploadedFile } from '../model/HonoUploader/HonoUploader';
 
 import { Hono } from 'hono';
 import { logger } from 'hono/logger';
-import { HonoStorageDisk } from '../model/HonoUpload/storage/HonoStorageDisk';
-import { HonoStorageS3 } from '../model/HonoUpload/storage/s3/HonoStorageS3';
-import { amazonS3Configurator } from '../model/HonoUpload/storage/s3/IHonoStorageS3Constructor';
-import { UploadOptionsImages } from '../model/HonoUpload/HonoUploadOptions';
-import { HonoUploadS3Deleter } from '../model/HonoUpload/storage/s3/HonoUploaderS3Deleter';
+import { HonoStorageDisk } from '../model/HonoUploader/storage/HonoStorageDisk';
+import { HonoStorageS3 } from '../model/HonoUploader/storage/s3/HonoStorageS3';
+import { amazonS3Configurator } from '../model/HonoUploader/storage/s3/IHonoStorageS3Constructor';
+import { UploadOptionsImages } from '../model/HonoUploader/HonoUploaderOptions';
+import { HonoUploaderS3Deleter } from '../model/HonoUploader/storage/s3/HonoUploaderS3Deleter';
 
 
 const app = new Hono();
@@ -17,7 +17,7 @@ app.get('/', (c) => c.text('Hello Bun!'));
 
 //DISK STORAGE
 const diskStorage = new HonoStorageDisk(__dirname + '/testUploads');
-const honoUploader = new HonoUpload(diskStorage);
+const honoUploader = new HonoUploader(diskStorage);
 app.post('/upload', honoUploader.single('file'), (c) => c.json({ location: c.get('file').location }));
 
 app.post('/upload/image', honoUploader.single('file', UploadOptionsImages), (c) => c.json({ location: c.get('file').location }));
@@ -35,7 +35,7 @@ const region = process.env.AWS_S3_DATA_REGION!;
 
 const s3Config = amazonS3Configurator(keyId, keySecret, bucketName, region);
 const s3Storage = new HonoStorageS3(s3Config, { path: 'test' });
-const s3Uploader = new HonoUpload(s3Storage);
+const s3Uploader = new HonoUploader(s3Storage);
 
 app.post('/uploadS3', s3Uploader.single('file'), (c) => c.json({ location: c.get('file').location }));
 
@@ -45,7 +45,7 @@ app.post('/uploadS3/many', s3Uploader.array('files'), (c) => c.json({ locations:
 
 app.delete('/delete/s3/files', async (c) => {
     const { files } = await c.req.json();
-    const honoDeleter = new HonoUploadS3Deleter(s3Config);
+    const honoDeleter = new HonoUploaderS3Deleter(s3Config);
     const deleted = await Promise.all(files.map(async (f: string) => {
         return await honoDeleter.deleteFileFromAmazonUrl(f);
     }));

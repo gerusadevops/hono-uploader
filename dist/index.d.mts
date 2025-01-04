@@ -5,7 +5,7 @@ interface HonoFileStorageOption {
     saveFile(file: File, filename: string): Promise<string>;
 }
 
-declare enum HonoUploadError {
+declare enum HonoUploaderError {
     FILE_NOT_FOUND = "file.upload.error.file_not_found",
     FILES_NOT_FOUND = "file.upload.error.files_not_found",
     EXPECTED_ARRAY_OF_FILES = "file.upload.error.expected_array_of_files",
@@ -30,7 +30,7 @@ interface UploadedFile {
     location: string;
     file: File;
 }
-declare class HonoUpload {
+declare class HonoUploader {
     private storage;
     constructor(storage?: HonoFileStorageOption);
     private validateFileIntegrity;
@@ -61,29 +61,29 @@ interface S3BucketOptions {
     bucketName: string;
     acl?: ObjectCannedACL;
 }
-interface IHonoUploadS3Configuration {
+interface IHonoUploaderS3Configuration {
     s3Client: S3Client;
     bucketConfig: S3BucketOptions;
 }
-declare function amazonS3Configurator(accessKeyId: string, accessKeySecret: string, bucketName: string, region: string, acl?: ObjectCannedACL): IHonoUploadS3Configuration;
-declare function digitalOceanSpacesS3Configurator(accessKeyId: string, accessKeySecret: string, bucketName: string, acl?: ObjectCannedACL): IHonoUploadS3Configuration;
+declare function amazonS3Configurator(accessKeyId: string, accessKeySecret: string, bucketName: string, region: string, acl?: ObjectCannedACL): IHonoUploaderS3Configuration;
+declare function digitalOceanSpacesS3Configurator(accessKeyId: string, accessKeySecret: string, bucketName: string, acl?: ObjectCannedACL): IHonoUploaderS3Configuration;
 
-interface HonoUploadS3Path {
+interface HonoUploaderS3Path {
     path: string;
 }
 declare class HonoStorageS3 implements HonoFileStorageOption {
     s3Client: S3Client;
     bucketOptions: S3BucketOptions;
     basePath: string;
-    constructor(s3Config: IHonoUploadS3Configuration, path: HonoUploadS3Path);
+    constructor(s3Config: IHonoUploaderS3Configuration, path: HonoUploaderS3Path);
     saveFile(file: File, filename: string): Promise<string>;
 }
 
-declare class HonoUploadS3Deleter {
-    s3Configuration: IHonoUploadS3Configuration;
-    constructor(s3Configuration: IHonoUploadS3Configuration);
+declare class HonoUploaderS3Deleter {
+    s3Configuration: IHonoUploaderS3Configuration;
+    constructor(s3Configuration: IHonoUploaderS3Configuration);
     deleteFileFromAmazonUrl(url: string): Promise<string | null>;
     deleteFileFromDigitalOceanUrl(url: string): Promise<boolean>;
 }
 
-export { type HonoFileStorageOption, HonoStorageDisk, HonoStorageS3, HonoUpload, HonoUploadError, HonoUploadS3Deleter, type IHonoUploadS3Configuration, type S3BucketOptions, type UploadOptions, UploadOptionsDefault, UploadOptionsImages, type UploadedFile, amazonS3Configurator, digitalOceanSpacesS3Configurator };
+export { type HonoFileStorageOption, HonoStorageDisk, HonoStorageS3, HonoUploader, HonoUploaderError, HonoUploaderS3Deleter, type IHonoUploaderS3Configuration, type S3BucketOptions, type UploadOptions, UploadOptionsDefault, UploadOptionsImages, type UploadedFile, amazonS3Configurator, digitalOceanSpacesS3Configurator };
