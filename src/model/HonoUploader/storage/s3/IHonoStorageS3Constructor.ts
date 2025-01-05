@@ -13,8 +13,12 @@ export interface IHonoUploaderS3Configuration {
 
 
 export function amazonS3Configurator(accessKeyId: string, accessKeySecret: string, bucketName: string, region: string, acl: ObjectCannedACL = "public-read"): IHonoUploaderS3Configuration {
-   
-    console.table({ accessKeyId, accessKeySecret, bucketName, region });
+
+
+    const sensoredAccessKey = accessKeyId.slice(0, 6) + "...";
+    const sensoredSecretKey = accessKeySecret.slice(0, 6) + "...";
+
+    console.table({ accessKeyId, sensoredAccessKey, sensoredSecretKey, region });
 
     const s3Client = new S3Client({
         region: region,

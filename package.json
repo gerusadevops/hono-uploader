@@ -13,6 +13,10 @@
   },
   "author": "Gerardo Torres",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gerusadevops/hono-uploader"
+  },
   "devDependencies": {
     "@hono/node-server": "^1.13.7",
     "@types/jest": "^29.5.14",
