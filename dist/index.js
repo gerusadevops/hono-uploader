@@ -242,7 +242,9 @@ var HonoUploaderS3Deleter = class {
 // src/model/HonoUploader/storage/s3/IHonoStorageS3Constructor.ts
 var import_client_s32 = require("@aws-sdk/client-s3");
 function amazonS3Configurator(accessKeyId, accessKeySecret, bucketName, region, acl = "public-read") {
-  console.table({ accessKeyId, accessKeySecret, bucketName, region });
+  const sensoredAccessKey = accessKeyId.slice(0, 6) + "...";
+  const sensoredSecretKey = accessKeySecret.slice(0, 6) + "...";
+  console.table({ accessKeyId, sensoredAccessKey, sensoredSecretKey, region });
   const s3Client = new import_client_s32.S3Client({
     region,
     credentials: {
