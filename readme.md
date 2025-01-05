@@ -1,6 +1,26 @@
-# Hono Uploader
+![Descripción](https://i.imgur.com/Oyw4TJQ.png)
 
-Hono Uploader is a powerful and flexible file upload library for Node.js and Bun, designed to handle various file types and storage options, including local disk storage and Amazon S3. It provides a simple API for uploading files, validating file types, and managing file storage.
+# Hono Uploader
+Hono Uploader is a powerful and flexible file upload library for bun and **Node.js**, designed to handle various file types and storage options, including local **disk storage** and Amazon **S3**. It provides a simple API for uploading files via **middleware**, validating file types, and managing file storage.
+
+## Usage example
+See bellow for full examples on S3 Storage and Disk storage
+
+```typescript
+import { HonoUploader } from 'hono-uploader';
+import { HonoStorageDisk } from 'hono-uploader/storage/HonoStorageDisk';
+
+const app = new Hono();
+const diskStorage = new HonoStorageDisk('./uploads');
+const honoUploader = new HonoUploader(diskStorage);
+
+app.post('/upload', honoUploader.single('file'), async(c) => {
+  const file = c.get('file');
+  const fileUploadUrl = file.location;
+  c.json({ location: fileUploadUrl });
+});
+
+```
 
 ## Motivation
 
@@ -12,13 +32,18 @@ The motivation behind Hono Uploader is to provide a robust and easy-to-use solut
 - Validates file types and sizes
 - Handles single and multiple file uploads
 - Provides detailed error messages for invalid uploads
+- Single line middleware integration
 
 ## Installation
 
-To install Hono Uploader, use npm or yarn:
+To install Hono Uploader, use npm:
 
 ```bash
 npm install hono-uploader
+```
+
+```bash
+bun add hono-uploader
 ```
 
 ## Usage

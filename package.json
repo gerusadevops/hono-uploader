@@ -1,7 +1,7 @@
 {
   "name": "hono-uploader",
   "version": "1.0.1",
-  "description": "Hono upload let you upload files to hono endpoints using middleware",
+  "description": "Powerfull yet simple file upload library for hono. Supports S3 and local storage.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
