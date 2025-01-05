@@ -1,6 +1,6 @@
 {
   "name": "hono-uploader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Hono upload let you upload files to hono endpoints using middleware",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
